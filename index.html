@@ -3,24 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
-    <link rel="icon" href="images/icon.png" type="image/png">
+    <title>Cyberpunk To-Do</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👾</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="stars"></div>
+    <div class="custom-cursor"></div>
     <div class="container">
-        <div class="todo-app">
-            <h2>To-Do List <img src="images/icon.png"></h2>
-            <div class="row">
-                <input type="text" id="input-box" placeholder="Add your text">
-                <button onclick="addTask()">Add</button>
+        <header class="main-header">
+            <h1>SYSTEM.TASKS</h1>
+        </header>
+
+        <main class="todo-app">
+            <div class="input-container">
+                <input type="text" id="input-box" placeholder="Initiate new task...">
+                <button class="add-button" aria-label="Add Task">+</button>
             </div>
             <ul id="list-container">
-                <li class="checked">Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li>
+                <!-- Tasks will be dynamically inserted here -->
             </ul>
-        </div>
+        </main>
+
+        <aside class="side-panel left-panel">
+            <div class="panel-content">STATUS: ONLINE</div>
+        </aside>
+        <aside class="side-panel right-panel">
+            <div class="panel-content">PRIORITY: HIGH</div>
+        </aside>
     </div>
 <script src="script.js"></script>
 </body>

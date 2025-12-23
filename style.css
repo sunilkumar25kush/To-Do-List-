@@ -1,165 +1,412 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #01060C;
+    --primary-glow: #FAFEFD;
+    --secondary-glow: #A7D8DE; /* A complementary light cyan */
+    --cursor-glow: #B51B91;
+    --text-color: #f0f0f0;
+    --glass-bg: rgba(20, 20, 30, 0.6);
+}
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Orbitron', sans-serif;
     box-sizing: border-box;
 }
 
 body {
-    background: #0a0a0a;
+    background: linear-gradient(135deg, var(--bg-color), #24464F);
+    background-size: 200% 200%;
+    animation: background-pan 15s ease infinite;
+    color: var(--text-color);
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+}
+
+@keyframes background-pan {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
-    width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 450px) 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header header header"
+        "left-panel main right-panel";
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 1;
 }
 
+/* --- Shooting Stars --- */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.stars::before, .stars::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    animation: shooting-star 15s linear infinite;
+}
+
+.stars::after {
+    animation-delay: -5s; /* Stagger the second star */
+    animation-duration: 20s;
+}
+
+@keyframes shooting-star {
+    0% {
+        transform: translate(100vw, -100px) scale(0.5);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100px, 100vh) scale(1);
+        opacity: 0;
+    }
+}
+
+/* --- Dynamic Mouse Light --- */
+.container::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, 50%);
+    left: var(--mouse-x, 50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    transition: top 0.2s ease-out, left 0.2s ease-out;
+    z-index: -1;
+}
+
+/* --- Header --- */
+.main-header {
+    grid-area: header;
+    text-align: center;
+    padding: 20px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5em;
+    text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    position: relative;
+}
+
+.main-header h1 {
+    animation: glitch-header 10s infinite alternate;
+}
+
+@keyframes glitch-header {
+    0%, 100% {
+        transform: skewX(0);
+        text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    }
+    49% {
+        transform: skewX(0);
+        text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    }
+    50% {
+        transform: skewX(2deg);
+        text-shadow: 0 0 10px var(--secondary-glow), 0 0 20px var(--secondary-glow);
+    }
+    51% {
+        transform: skewX(0);
+        text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    }
+}
+
+.header-glow-line {
+    width: 100%;
+    height: 2px;
+    background: var(--primary-glow);
+    box-shadow: 0 0 10px var(--primary-glow);
+    margin-top: 10px;
+    animation: pulse-line 2s infinite alternate;
+}
+
+@keyframes pulse-line {
+    from { opacity: 0.5; box-shadow: 0 0 5px var(--primary-glow); }
+    to { opacity: 1; box-shadow: 0 0 15px var(--primary-glow); }
+}
+
+/* --- Main App --- */
 .todo-app {
-    width: 100%;
-    max-width: 540px;
-    background: #1f1f1f;
-    margin: 100px auto 20px;
-    padding: 40px 30px 70px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 30px #00bfff;
-    animation: glow 1.5s infinite alternate;
+    grid-area: main;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--primary-glow);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 20px var(--primary-glow);
+    animation: float-in 1s ease-out;
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 30px #00bfff;
-    }
-    to {
-        box-shadow: 0 0 20px #ff4da6, 0 0 30px #ff4da6, 0 0 40px #ff4da6;
-    }
+@keyframes float-in {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.todo-app h2 {
-    color: #00bfff;
+/* --- Input Area --- */
+.input-container {
     display: flex;
-    align-items: center;
+    gap: 10px;
     margin-bottom: 20px;
-    text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
+    position: relative;
 }
 
-.todo-app h2 img {
-    width: 30px;
-    margin-left: 10px;
+.input-container.shake {
+    animation: shake-anim 0.5s;
 }
 
-.row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #333;
-    border-radius: 30px;
-    padding-left: 20px;
-    margin-bottom: 25px;
+@keyframes shake-anim {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
 }
 
-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 10px;
-    font-weight: 14px;
-    color: #fff;
-}
-
-button {
-    border: none;
-    outline: none;
-    padding: 16px 50px;
-    background: #00bfff;
-    color: #fff;
+#input-box {
+    flex-grow: 1;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--secondary-glow);
+    border-radius: 50px;
+    padding: 15px 20px;
+    color: var(--text-color);
     font-size: 16px;
-    cursor: pointer;
-    border-radius: 40px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
+    outline: none;
+    transition: all 0.3s;
 }
 
-button:hover {
-    background: #ff4da6;
-    box-shadow: 0 0 10px #ff4da6, 0 0 20px #ff4da6;
-    transform: scale(1.05);
+#input-box:focus {
+    box-shadow: 0 0 15px var(--secondary-glow);
+    border-color: var(--secondary-glow);
+}
+
+.add-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary-glow), #ff4da6);
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.add-button:hover {
+    animation: wobble-3d 0.8s ease-out;
+    box-shadow: 0 0 25px var(--primary-glow);
+}
+
+@keyframes wobble-3d {
+    0%, 100% { transform: scale(1) rotate(0); }
+    25% { transform: scale(1.1) rotate3d(0, 1, 0, -15deg); }
+    50% { transform: scale(1.1) rotate3d(0, 1, 0, 15deg); }
+    75% { transform: scale(1.1) rotate3d(0, 1, 0, -5deg); }
+}
+
+/* --- Task List --- */
+#list-container {
+    list-style: none;
+    max-height: 45vh;
+    overflow-y: auto;
+    padding-right: 10px; /* For scrollbar */
+}
+
+/* Custom Scrollbar */
+#list-container::-webkit-scrollbar { width: 4px; }
+#list-container::-webkit-scrollbar-track { background: transparent; }
+#list-container::-webkit-scrollbar-thumb {
+    background: var(--primary-glow);
+    border-radius: 4px;
 }
 
 ul li {
-    list-style: none;
-    font-size: 17px;
-    padding: 12px 8px 12px 50px;
-    user-select: none;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid var(--secondary-glow);
+    animation: task-enter 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes task-enter {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+ul li:hover {
+    animation: orbital-float 4s ease-in-out infinite;
+}
+
+@keyframes orbital-float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(0.5deg); }
+}
+
+.task-text {
+    flex-grow: 1;
     cursor: pointer;
+}
+
+.delete-icon {
+    color: #888;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s;
+}
+
+.delete-icon:hover {
+    color: var(--primary-glow);
+    transform: scale(1.2);
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* --- Task Completion Animations --- */
+li.checked .task-text {
+    text-decoration: none; /* We use a custom animation */
+    color: #888;
     position: relative;
-    color: #fff;
-    animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-ul li::before {
+li.checked .task-text::after {
     content: '';
     position: absolute;
-    height: 28px;
-    width: 28px;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-glow);
+    transform-origin: left;
+    animation: strike-through-anim 0.5s ease-out forwards;
+}
+
+@keyframes strike-through-anim {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+li.completing {
+    animation: strike-through-anim 0.5s ease-out forwards;
+}
+
+li.fading-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.8); }
+}
+
+li.deleting {
+    animation: delete-anim 0.5s ease-out forwards;
+}
+
+@keyframes delete-anim {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(50px); }
+}
+
+/* --- Side Panels --- */
+.side-panel {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--secondary-glow);
+    text-shadow: 0 0 10px var(--secondary-glow);
+}
+.left-panel { grid-area: left-panel; }
+.right-panel { grid-area: right-panel; }
+
+/* --- Custom Cursor --- */
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--cursor-glow);
     border-radius: 50%;
-    background-image: url(images/unchecked.png);
-    background-size: cover;
-    background-position: center;
-    top: 12px;
-    left: 8px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: all 0.1s ease-out;
+    box-shadow: 0 0 10px var(--cursor-glow), 0 0 20px var(--cursor-glow);
 }
 
-ul li.checked {
-    color: #888;
-    text-decoration: line-through;
+.custom-cursor.pointer {
+    transform: translate(-50%, -50%) scale(1.5);
+    background: var(--cursor-glow);
+    opacity: 0.5;
 }
 
-ul li.checked::before {
-    background-image: url(images/checked.png);
+.custom-cursor.clicked {
+    transform: translate(-50%, -50%) scale(0.8);
+    box-shadow: 0 0 5px var(--cursor-glow);
 }
 
-ul li span {
-    position: absolute;
-    right: 0;
-    top: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-    color: #888;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    transition: background 0.3s ease;
+/* Hide default cursor on body and interactive elements */
+body, button, .task-text, .delete-icon {
+    cursor: none;
 }
 
-ul li span:hover {
-    background: #333;
-    color: #ff4da6;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 480px) {
-    .todo-app {
-        padding: 30px 20px 60px;
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "header"
+            "main";
     }
+    .side-panel { display: none; }
+    .todo-app { margin: 20px; }
+    #list-container { max-height: 65vh; }
+    .custom-cursor {
+        display: none; /* Hide custom cursor on mobile for better usability */
+    }
+    body, button, .task-text, .delete-icon {
+        cursor: auto; /* Restore default cursor on mobile */
+    }
+}
 
-    button {
-        padding: 16px 30px;
+@media (max-width: 420px) {
+    .main-header h1 {
+        font-size: 1.2em;
+    }
+    .todo-app {
+        padding: 20px;
+        margin: 15px;
+    }
+    #list-container {
+        max-height: 60vh; /* Give a bit more height on small screens */
     }
 }

@@ -68,3 +68,28 @@ inputBox.addEventListener("keypress", function(event) {
 
 // Load tasks when page loads
 window.addEventListener("load", loadTasks);
+
+// --- Custom Cursor Logic ---
+const cursor = document.querySelector('.custom-cursor');
+
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+document.addEventListener('mousedown', () => {
+    cursor.classList.add('clicked');
+});
+
+document.addEventListener('mouseup', () => {
+    cursor.classList.remove('clicked');
+});
+
+const interactiveElements = document.querySelectorAll('button, .task-text, .delete-icon');
+interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('pointer'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('pointer'));
+});
+
+// --- Initial Load ---
+document.addEventListener('DOMContentLoaded', showTasks);
