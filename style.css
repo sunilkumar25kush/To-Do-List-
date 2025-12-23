@@ -8,57 +8,155 @@
 }
 
 body {
-    background: #0a0a0a;
+    background: #0a0e27;
+    overflow-x: hidden;
 }
 
 .container {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+    background: linear-gradient(135deg, #0a0e27 0%, #1a0033 50%, #0d1b2a 100%);
     padding: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Aurora Background Effect */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(139, 0, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 200, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 0%, rgba(0, 200, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 20%, rgba(255, 0, 200, 0.2) 0%, transparent 50%);
+    animation: auroraShift 15s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes auroraShift {
+    0% {
+        background: 
+            radial-gradient(ellipse at 20% 50%, rgba(139, 0, 255, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 80%, rgba(0, 255, 200, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 40% 0%, rgba(0, 200, 255, 0.2) 0%, transparent 50%),
+            radial-gradient(ellipse at 60% 20%, rgba(255, 0, 200, 0.2) 0%, transparent 50%);
+    }
+    50% {
+        background: 
+            radial-gradient(ellipse at 80% 50%, rgba(0, 255, 150, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 20% 80%, rgba(139, 0, 255, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 60% 10%, rgba(255, 0, 150, 0.2) 0%, transparent 50%),
+            radial-gradient(ellipse at 40% 30%, rgba(0, 200, 255, 0.2) 0%, transparent 50%);
+    }
+    100% {
+        background: 
+            radial-gradient(ellipse at 20% 50%, rgba(139, 0, 255, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 80%, rgba(0, 255, 200, 0.3) 0%, transparent 50%),
+            radial-gradient(ellipse at 40% 0%, rgba(0, 200, 255, 0.2) 0%, transparent 50%),
+            radial-gradient(ellipse at 60% 20%, rgba(255, 0, 200, 0.2) 0%, transparent 50%);
+    }
 }
 
 .todo-app {
     width: 100%;
     max-width: 540px;
-    background: #1f1f1f;
+    background: rgba(20, 20, 50, 0.85);
+    backdrop-filter: blur(10px);
     margin: 100px auto 20px;
     padding: 40px 30px 70px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 30px #00bfff;
-    animation: glow 1.5s infinite alternate;
+    border-radius: 15px;
+    border: 2px solid rgba(0, 255, 200, 0.3);
+    box-shadow: 
+        0 0 20px rgba(0, 255, 200, 0.4),
+        0 0 40px rgba(139, 0, 255, 0.3),
+        0 0 60px rgba(0, 200, 255, 0.2),
+        inset 0 0 20px rgba(255, 0, 200, 0.1);
+    animation: auroraGlow 4s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 30px #00bfff;
+@keyframes auroraGlow {
+    0% {
+        box-shadow: 
+            0 0 20px rgba(0, 255, 200, 0.4),
+            0 0 40px rgba(139, 0, 255, 0.3),
+            0 0 60px rgba(0, 200, 255, 0.2),
+            inset 0 0 20px rgba(255, 0, 200, 0.1);
     }
-    to {
-        box-shadow: 0 0 20px #ff4da6, 0 0 30px #ff4da6, 0 0 40px #ff4da6;
+    50% {
+        box-shadow: 
+            0 0 30px rgba(139, 0, 255, 0.5),
+            0 0 60px rgba(0, 200, 255, 0.4),
+            0 0 80px rgba(0, 255, 150, 0.3),
+            inset 0 0 30px rgba(0, 255, 200, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 20px rgba(0, 255, 200, 0.4),
+            0 0 40px rgba(139, 0, 255, 0.3),
+            0 0 60px rgba(0, 200, 255, 0.2),
+            inset 0 0 20px rgba(255, 0, 200, 0.1);
     }
 }
 
 .todo-app h2 {
-    color: #00bfff;
+    color: #00ffcc;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
+    text-shadow: 
+        0 0 10px #00ffcc,
+        0 0 20px #8b00ff,
+        0 0 30px #00c8ff;
+    letter-spacing: 2px;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px #00ffcc,
+            0 0 20px #8b00ff,
+            0 0 30px #00c8ff;
+        transform: translateY(0);
+    }
+    50% {
+        text-shadow: 
+            0 0 20px #8b00ff,
+            0 0 40px #00ffcc,
+            0 0 50px #ff00c8;
+        transform: translateY(-2px);
+    }
 }
 
 .todo-app h2 img {
     width: 30px;
     margin-left: 10px;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #333;
+    background: rgba(40, 40, 80, 0.7);
     border-radius: 30px;
     padding-left: 20px;
     margin-bottom: 25px;
+    border: 1px solid rgba(0, 255, 200, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 10px rgba(139, 0, 255, 0.1);
 }
 
 input {
@@ -66,45 +164,125 @@ input {
     border: none;
     outline: none;
     background: transparent;
-    padding: 10px;
-    font-weight: 14px;
-    color: #fff;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #00ffcc;
+    caret-color: #ff00c8;
+}
+
+input::placeholder {
+    color: rgba(0, 255, 200, 0.5);
+}
+
+input:focus {
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+/* Shake animation for empty input */
+input.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
 }
 
 button {
-    border: none;
+    border: 2px solid #00ffcc;
     outline: none;
-    padding: 16px 50px;
-    background: #00bfff;
-    color: #fff;
+    padding: 12px 40px;
+    background: linear-gradient(135deg, #00ffcc, #00c8ff, #8b00ff);
+    color: #000;
     font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
     border-radius: 40px;
     transition: all 0.3s ease;
-    box-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
+    box-shadow: 
+        0 0 15px rgba(0, 255, 200, 0.5),
+        0 0 25px rgba(139, 0, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff00c8, #00ffcc);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+button:hover::before {
+    left: 0;
 }
 
 button:hover {
-    background: #ff4da6;
-    box-shadow: 0 0 10px #ff4da6, 0 0 20px #ff4da6;
-    transform: scale(1.05);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 
+        0 0 25px rgba(255, 0, 200, 0.6),
+        0 0 40px rgba(0, 255, 200, 0.5),
+        0 5px 15px rgba(139, 0, 255, 0.4);
+}
+
+button:active {
+    transform: scale(0.98) translateY(0);
+}
+
+ul {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+ul::-webkit-scrollbar-track {
+    background: rgba(139, 0, 255, 0.1);
+    border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00ffcc, #8b00ff);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+
+ul::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #8b00ff, #00ffcc);
 }
 
 ul li {
     list-style: none;
-    font-size: 17px;
+    font-size: 15px;
     padding: 12px 8px 12px 50px;
     user-select: none;
-    cursor: pointer;
     position: relative;
-    color: #fff;
-    animation: fadeIn 0.5s ease;
+    color: #e0e0e0;
+    animation: fadeInDown 0.5s ease;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: rgba(60, 40, 100, 0.4);
+    border-left: 3px solid rgba(0, 255, 200, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInDown {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-15px);
     }
     to {
         opacity: 1;
@@ -112,54 +290,418 @@ ul li {
     }
 }
 
+@keyframes slideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+ul li:hover {
+    background: rgba(80, 60, 120, 0.6);
+    border-left-color: rgba(255, 0, 200, 0.5);
+    box-shadow: inset 0 0 10px rgba(0, 255, 200, 0.1);
+}
+
 ul li::before {
     content: '';
     position: absolute;
-    height: 28px;
-    width: 28px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
-    background-image: url(images/unchecked.png);
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(135deg, rgba(0, 255, 200, 0.3), rgba(139, 0, 255, 0.3));
+    border: 2px solid rgba(0, 255, 200, 0.4);
     top: 12px;
-    left: 8px;
+    left: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+}
+
+ul li:hover::before {
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+    transform: scale(1.1);
+}
+
+.task-text {
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+.task-text:hover {
+    color: #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
 }
 
 ul li.checked {
-    color: #888;
+    color: #666;
+    background: rgba(40, 40, 80, 0.3);
+    border-left-color: rgba(100, 100, 150, 0.3);
+}
+
+ul li.checked .task-text {
     text-decoration: line-through;
+    opacity: 0.6;
 }
 
 ul li.checked::before {
-    background-image: url(images/checked.png);
+    background: linear-gradient(135deg, rgba(0, 255, 150, 0.5), rgba(0, 200, 255, 0.5));
+    border-color: rgba(0, 255, 150, 0.6);
+    box-shadow: 
+        0 0 15px rgba(0, 255, 150, 0.4),
+        inset 0 0 5px rgba(0, 255, 150, 0.3);
 }
 
-ul li span {
+ul li.checked::after {
+    content: '✓';
     position: absolute;
-    right: 0;
-    top: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-    color: #888;
-    line-height: 40px;
+    left: 15px;
+    top: 12px;
+    color: #00ffcc;
+    font-weight: 700;
+    font-size: 16px;
+    text-shadow: 0 0 8px #00ffcc;
+    animation: checkmark 0.5s ease;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.delete-btn {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    color: #ff6b9d;
+    line-height: 30px;
     text-align: center;
     border-radius: 50%;
-    transition: background 0.3s ease;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
 }
 
-ul li span:hover {
-    background: #333;
-    color: #ff4da6;
+.delete-btn:hover {
+    background: rgba(255, 0, 200, 0.3);
+    color: #ff00c8;
+    transform: scale(1.2) rotate(90deg);
+    box-shadow: 0 0 15px rgba(255, 0, 200, 0.5);
+    text-shadow: 0 0 8px #ff00c8;
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 480px) {
+.delete-btn:active {
+    transform: scale(1.1) rotate(90deg);
+}
+
+/* Responsive adjustments - Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) {
     .todo-app {
-        padding: 30px 20px 60px;
+        margin: 80px auto 20px;
+    }
+
+    .todo-app h2 {
+        font-size: 24px;
+        letter-spacing: 1px;
     }
 
     button {
-        padding: 16px 30px;
+        padding: 12px 35px;
+        font-size: 15px;
     }
+
+    ul li {
+        font-size: 14px;
+        padding: 10px 8px 10px 48px;
+    }
+
+    .delete-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
+    }
+}
+
+/* Responsive adjustments - Mobile (480px - 767px) */
+@media screen and (max-width: 767px) {
+    .todo-app {
+        max-width: 95%;
+        padding: 30px 20px 60px;
+        margin: 70px auto 20px;
+        border-radius: 12px;
+    }
+
+    .todo-app h2 {
+        font-size: 22px;
+        letter-spacing: 1px;
+        margin-bottom: 18px;
+    }
+
+    .todo-app h2 img {
+        width: 26px;
+        margin-left: 8px;
+    }
+
+    .row {
+        border-radius: 25px;
+        padding-left: 15px;
+        margin-bottom: 20px;
+    }
+
+    input {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    button {
+        padding: 10px 30px;
+        font-size: 14px;
+        border-radius: 35px;
+    }
+
+    ul {
+        max-height: 350px;
+    }
+
+    ul li {
+        font-size: 13px;
+        padding: 10px 8px 10px 45px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+    }
+
+    ul li::before {
+        height: 18px;
+        width: 18px;
+        top: 11px;
+        left: 10px;
+        border-width: 1.5px;
+    }
+
+    ul li.checked::after {
+        left: 13px;
+        top: 11px;
+        font-size: 14px;
+    }
+
+    .delete-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 17px;
+        margin-left: 8px;
+    }
+
+    .task-text {
+        word-break: break-word;
+    }
+}
+
+/* Responsive adjustments - Small Mobile (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .todo-app {
+        max-width: 100%;
+        padding: 25px 15px 50px;
+        margin: 50px auto 15px;
+        border-radius: 10px;
+    }
+
+    .todo-app h2 {
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        margin-bottom: 15px;
+    }
+
+    .todo-app h2 img {
+        width: 22px;
+        margin-left: 6px;
+    }
+
+    .row {
+        border-radius: 20px;
+        padding-left: 12px;
+        margin-bottom: 18px;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    input::placeholder {
+        font-size: 12px;
+    }
+
+    button {
+        padding: 10px 22px;
+        font-size: 13px;
+        border-radius: 30px;
+        border-width: 1.5px;
+    }
+
+    ul {
+        max-height: 300px;
+        padding-right: 3px;
+    }
+
+    ul::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ul li {
+        font-size: 12px;
+        padding: 8px 6px 8px 40px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        border-left-width: 2px;
+    }
+
+    ul li::before {
+        height: 16px;
+        width: 16px;
+        top: 10px;
+        left: 8px;
+        border-width: 1.5px;
+    }
+
+    ul li.checked::after {
+        left: 11px;
+        top: 10px;
+        font-size: 12px;
+    }
+
+    .delete-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        margin-left: 6px;
+    }
+
+    .task-text {
+        font-size: 12px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* Responsive adjustments - Ultra Small Mobile (max-width: 320px) */
+@media screen and (max-width: 320px) {
+    .todo-app {
+        max-width: 100%;
+        padding: 20px 10px 40px;
+        margin: 40px auto 10px;
+        border-radius: 8px;
+    }
+
+    .todo-app h2 {
+        font-size: 16px;
+        letter-spacing: 0px;
+        margin-bottom: 12px;
+    }
+
+    .todo-app h2 img {
+        width: 18px;
+        margin-left: 4px;
+    }
+
+    .row {
+        border-radius: 18px;
+        padding-left: 10px;
+        margin-bottom: 15px;
+    }
+
+    input {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    input::placeholder {
+        font-size: 11px;
+    }
+
+    button {
+        padding: 8px 18px;
+        font-size: 12px;
+        border-radius: 25px;
+    }
+
+    ul {
+        max-height: 280px;
+        padding-right: 2px;
+    }
+
+    ul::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    ul li {
+        font-size: 11px;
+        padding: 7px 5px 7px 35px;
+        margin-bottom: 4px;
+        border-radius: 4px;
+        border-left-width: 2px;
+    }
+
+    ul li::before {
+        height: 14px;
+        width: 14px;
+        top: 9px;
+        left: 7px;
+        border-width: 1px;
+    }
+
+    ul li.checked::after {
+        left: 10px;
+        top: 9px;
+        font-size: 11px;
+    }
+
+    .delete-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+        margin-left: 4px;
+    }
+
+    .task-text {
+        font-size: 11px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* Landscape orientation optimization */
+@media screen and (max-height: 500px) {
+    .todo-app {
+        margin: 20px auto;
+        padding: 20px 15px 40px;
+    }
+
+    ul {
+        max-height: 200px;
+    }
+}
+
+/* Animation for subtle glow effect */
+@keyframes subtleGlow {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.1);
+    }
+}
+
+.todo-app:hover {
+    animation: auroraGlow 3s ease-in-out infinite, subtleGlow 3s ease-in-out infinite;
 }
