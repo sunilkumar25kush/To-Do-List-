@@ -98,4 +98,20 @@ inputBox.addEventListener("keypress", function(event) {
 });
 
 // Load tasks when page loads
-window.addEventListener("load", loadTasks);
+window.addEventListener("load", function() {
+    // Clear any old sample tasks (Task 1, Task 2, Task 3) from localStorage
+    const savedTasks = localStorage.getItem("tasks");
+    if (savedTasks && (savedTasks.includes("Task 1") || savedTasks.includes("Task 2") || savedTasks.includes("Task 3"))) {
+        localStorage.removeItem("tasks");
+        listContainer.innerHTML = "";
+    } else {
+        loadTasks();
+    }
+});
+
+// Function to manually clear all tasks (can be called from browser console)
+window.clearAllTasks = function() {
+    localStorage.removeItem("tasks");
+    listContainer.innerHTML = "";
+    console.log("✓ All tasks cleared!");
+};
